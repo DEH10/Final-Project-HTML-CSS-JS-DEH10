@@ -272,7 +272,7 @@ section {
 }
 
 .three-divs {
-    background-color: #f8f8f9ef; /* Baby blue background color */
+    background-color: #bfefff; /* Baby blue background color */
     display: flex; /* Using Flexbox for layout */
     justify-content: center; /* Centering items horizontally */
     gap: 100px; /* Add space between items */
@@ -281,7 +281,7 @@ section {
 .user-div {
     text-align: center; /* Centering text */
     padding: 10px; /* Setting padding */
-    background-color: #ffffff; /* White background color for user divs */
+    background-color: #bfefff; /* Baby blue background color for user divs */
     border-radius: 10px; /* Setting border radius */
     box-shadow: 0 0 10px rgba(246, 244, 244, 0.1); /* Adding box shadow */
 }

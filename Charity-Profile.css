@@ -190,8 +190,14 @@ body.show-footer footer {
 }
 
 /* Add this CSS rule to float the Volunteer Now button to the right */
-#volunteer-button {
+#volunteer-page-button {
     float: right;
-    margin-top: -40px; /* Adjust this value as needed */
+    margin-top: -30px; /* Adjust this value as needed */
+    margin-right: 10px; /* Adjust this value as needed */
+}
+/* Add this CSS rule to float the Volunteer Now button to the right */
+#volunteer-now-button{
+    float: right;
+    margin-top: -30px; /* Adjust this value as needed */
     margin-right: 145px; /* Adjust this value as needed */
 }

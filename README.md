@@ -1,1 +1,1 @@
-# inal-project-DEH10
+# Final-project-HTML-CSS-JS-DEH10

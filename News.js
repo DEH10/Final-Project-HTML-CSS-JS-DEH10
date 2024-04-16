@@ -1,6 +1,6 @@
 const options = {
     method: 'GET',
-    url: 'https://newsapi90.p.rapidapi.com/search',
+    url: 'https://news67.p.rapidapi.com/v2/topic-search',
     params: {
         query: 'topic',
         language: 'en-US',
@@ -9,14 +9,14 @@ const options = {
     timeout: 10000, // Example: 10 seconds timeout
     headers: {
         'X-RapidAPI-Key': '4e0363d5cbmsh3d792017c35585bp19139djsn93a837129c00',
-        'X-RapidAPI-Host': 'newsapi90.p.rapidapi.com'
+        'X-RapidAPI-Host': 'news67.p.rapidapi.com'
     }
 };
 
 // Function to fetch news articles based on the search query
 async function fetchNews(topic) {
     const apiKey = '4e0363d5cbmsh3d792017c35585bp19139djsn93a837129c00'; // Replace with your actual API key
-    const apiUrl = 'https://newsapi90.p.rapidapi.com/search';
+    const apiUrl = 'https://news67.p.rapidapi.com/v2/topic-search';
 
     const options = {
         method: 'GET',
@@ -28,7 +28,7 @@ async function fetchNews(topic) {
         },
         headers: {
             'X-RapidAPI-Key': apiKey,
-            'X-RapidAPI-Host': 'newsapi90.p.rapidapi.com'
+            'X-RapidAPI-Host': 'news67.p.rapidapi.com'
         }
     };
 

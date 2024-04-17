@@ -1,21 +1,21 @@
 // Function to fetch news based on the topic
 async function searchTopic(topic) {
     const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e'; // API key
-    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
+    const apiUrl = `https://serpapi.com/search.json?q=${topic}&tbm=nws&api_key=${apiKey}`;
 
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error('Failed to fetch news');
-        }
-        const data = await response.json();
-        if (data.news_results && data.news_results.length > 0) {
-            displayNews(data.news_results);
+        const response = await fetch(apiUrl, { mode: 'no-cors' }); // Set mode to 'no-cors'
+        if (response.ok) {
+            const data = await response.text(); // Since we cannot access response body in 'no-cors' mode, use text() instead of json()
+            console.log(data); // Do something with the fetched data
+            // Open a new window and display the fetched data
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(data);
         } else {
-            console.log('Not enough news articles found.');
+            console.error('Failed to fetch data:', response.status);
         }
     } catch (error) {
-        console.error('Error fetching news:', error.message);
+        console.error('Error fetching data:', error);
     }
 }
 

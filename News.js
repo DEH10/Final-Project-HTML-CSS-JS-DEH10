@@ -7,8 +7,9 @@ async function searchTopic(topic) {
         method: 'GET',
         url: apiUrl,
         params: {
-            engine: 'google_news',
             q: topic, // Use the topic as the search query
+            location: "United States", 
+            tbm: "nws",
             api_key: apiKey
         }
     };

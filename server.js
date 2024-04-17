@@ -12,7 +12,7 @@ app.use(cors());
 app.get('/search', async (req, res) => {
     const topic = req.query.topic;
     const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e';
-    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
+    const apiUrl = `https://deh10-final-project.herokuapp.com/search?topic=${encodeURIComponent(topic)}`;
 
     try {
         const response = await fetch(apiUrl);

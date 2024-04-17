@@ -9,7 +9,8 @@ document.querySelectorAll('.news-item').forEach(item => {
 // Function to fetch news based on the topic
 async function searchTopic(topic) {
     const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e'; // API key
-    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
+    const apiUrl = `https://cors-anywhere.herokuapp.com/https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
+
 
     try {
         const response = await fetch(apiUrl);

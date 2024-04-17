@@ -5,16 +5,6 @@ function displayNewsInNewWindow(news) {
     newWindow.document.body.innerHTML = newsContent; // Set the news content in the new window
 }
 
-// Call the searchTopic function with the desired topic
-document.getElementById('search-button').addEventListener('click', function() {
-    const topic = document.getElementById('search-input').value;
-    if (topic.trim() !== '') {
-        searchTopic(topic);
-    } else {
-        console.log('Please enter a valid topic.');
-    }
-});
-
 // Function to fetch news based on the topic
 async function searchTopic(topic) {
     const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e'; // API key
@@ -35,19 +25,6 @@ async function searchTopic(topic) {
         console.error('Error fetching news:', error.message);
     }
 }
-// Function to display news articles
-function displayNews(news) {
-    const entrepreneursNews = document.getElementById('entrepreneurs-news');
-    const socialChangeNews = document.getElementById('social-change-news');
-    const innovationNews = document.getElementById('innovation-news');
-
-    // Populate placeholders with news data
-    if (news.length >= 3) {
-        entrepreneursNews.innerHTML = createNewsHtml(news[0]);
-        socialChangeNews.innerHTML = createNewsHtml(news[1]);
-        innovationNews.innerHTML = createNewsHtml(news[2]);
-    }
-}
 
 // Function to create HTML for a news item
 function createNewsHtml(news) {
@@ -57,11 +34,24 @@ function createNewsHtml(news) {
     `;
 }
 
-// Call the searchTopic function with the desired topic
-document.getElementById('search-button').addEventListener('click', function() {
-    const topic = document.getElementById('search-input').value;
-    if (topic.trim() !== '') {
-        searchTopic(topic);
+// Frontend JavaScript
+document.getElementById('search-button').addEventListener('click', async function() {
+    const topic = document.getElementById('search-input').value.trim();
+    if (topic !== '') {
+        try {
+            const response = await fetch(`/search?topic=${encodeURIComponent(topic)}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch news');
+            }
+            const data = await response.json();
+            if (data.news_results && data.news_results.length > 0) {
+                displayNewsInNewWindow(data.news_results);
+            } else {
+                console.log('Not enough news articles found.');
+            }
+        } catch (error) {
+            console.error('Error fetching news:', error.message);
+        }
     } else {
         console.log('Please enter a valid topic.');
     }

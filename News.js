@@ -1,8 +1,8 @@
-// Function to display news articles in a new window
-function displayNewsInNewWindow(news) {
+// Function to display news articles on the webpage
+function displayNewsOnPage(news) {
     const newsContent = news.map(createNewsHtml).join('<hr>'); // Join news articles with a horizontal line
-    const newWindow = window.open('', '_blank'); // Open a new window
-    newWindow.document.body.innerHTML = newsContent; // Set the news content in the new window
+    const newsContainer = document.getElementById('news-container'); // Get the container element
+    newsContainer.innerHTML = newsContent; // Set the news content in the container
 }
 
 // Function to fetch news based on the topic
@@ -17,7 +17,7 @@ async function searchTopic(topic) {
         }
         const data = await response.json();
         if (data.news_results && data.news_results.length > 0) {
-            displayNewsInNewWindow(data.news_results);
+            displayNewsOnPage(data.news_results);
         } else {
             console.log('Not enough news articles found.');
         }
@@ -29,26 +29,19 @@ async function searchTopic(topic) {
 // Function to create HTML for a news item
 function createNewsHtml(news) {
     return `
-        <a href="${news.link}" target="_blank"><h3>${news.title}</h3></a>
-        <p>Date: ${news.published_date}</p>
+        <div class="news-item">
+            <a href="${news.link}" target="_blank"><h3>${news.title}</h3></a>
+            <p>Date: ${news.published_date}</p>
+        </div>
     `;
 }
 
-// Frontend JavaScript
+// Call the searchTopic function with the desired topic
 document.getElementById('search-button').addEventListener('click', async function() {
     const topic = document.getElementById('search-input').value.trim();
     if (topic !== '') {
         try {
-            const response = await fetch(`/search?topic=${encodeURIComponent(topic)}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch news');
-            }
-            const data = await response.json();
-            if (data.news_results && data.news_results.length > 0) {
-                displayNewsInNewWindow(data.news_results);
-            } else {
-                console.log('Not enough news articles found.');
-            }
+            await searchTopic(topic);
         } catch (error) {
             console.error('Error fetching news:', error.message);
         }

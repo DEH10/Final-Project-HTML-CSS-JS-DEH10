@@ -1,71 +1,50 @@
-const options = {
-    method: 'GET',
-    url: 'https://news67.p.rapidapi.com/v2/topic-search',
-    params: {
-        query: 'topic',
-        language: 'en-US',
-        region: 'US'
-    },
-    timeout: 10000, // Example: 10 seconds timeout
-    headers: {
-        'X-RapidAPI-Key': '4e0363d5cbmsh3d792017c35585bp19139djsn93a837129c00',
-        'X-RapidAPI-Host': 'news67.p.rapidapi.com'
-    }
-};
-
-// Function to fetch news articles based on the search query
-async function fetchNews(topic) {
-    const apiKey = '4e0363d5cbmsh3d792017c35585bp19139djsn93a837129c00'; // Replace with your actual API key
-    const apiUrl = 'https://news67.p.rapidapi.com/v2/topic-search';
+// Function to fetch news from Google API
+async function fetchNews() {
+    const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e'; // Your Google API key
+    const apiUrl = 'https://serpapi.com/search.json?q=Any+keyword&tbm=nws&kgmid=/m/02vqfm';
 
     const options = {
         method: 'GET',
         url: apiUrl,
         params: {
-            query: topic,
-            language: 'en-US',
-            region: 'US'
-        },
-        headers: {
-            'X-RapidAPI-Key': apiKey,
-            'X-RapidAPI-Host': 'news67.p.rapidapi.com'
+            engine: 'google_news',
+            story_token: 'CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pqdU9UWENSRXNnR1puWWJtdzZ5Z0FQAQ',
+            api_key: apiKey
         }
     };
 
     try {
-        const response = await axios.request(options); // Axios is used directly here
-        return response.data.articles;
+        const response = await axios.request(options); // Assuming axios is included
+        return response.data.news_results;
     } catch (error) {
         console.error(error);
         return [];
     }
 }
 
-// Function to display news articles for a specific topic
-async function displayNews(topic, containerId) {
-    const articles = await fetchNews(topic);
-    const container = document.getElementById(containerId);
+// Function to display news articles
+async function displayNews() {
+    const news = await fetchNews();
 
-    if (articles.length === 0) {
-        container.innerHTML = '<p>No articles found</p>';
-        return;
-    }
+    // Get news item placeholders
+    const entrepreneursNews = document.getElementById('entrepreneurs-news');
+    const socialChangeNews = document.getElementById('social-change-news');
+    const innovationNews = document.getElementById('innovation-news');
 
-    container.innerHTML = ''; // Clear existing content
-
-    articles.forEach(article => {
-        const articleElement = document.createElement('div');
-        articleElement.classList.add('news-article');
-        articleElement.innerHTML = `
-            <h3>${article.title}</h3>
-            <p>${article.description}</p>
-            <p>Date: ${article.publishedAt}</p>
-        `;
-        container.appendChild(articleElement);
+    // Populate placeholders with news data
+    news.forEach((newsItem, index) => {
+        const container = index === 0 ? entrepreneursNews : index === 1 ? socialChangeNews : innovationNews;
+        container.innerHTML = createNewsHtml(newsItem);
     });
 }
 
-// Display news articles for each topic
-displayNews('Entrepreneurs', 'entrepreneurs-news');
-displayNews('Social Change', 'social-change-news');
-displayNews('Innovation', 'innovation-news');
+// Function to create HTML for a news item
+function createNewsHtml(news) {
+    return `
+        <a href="${news.link}" target="_blank"><h3>${news.title}</h3></a>
+        <p>Date: ${news.published_date}</p>
+    `;
+}
+
+// Display news articles
+displayNews();

@@ -1,9 +1,10 @@
-// Function to display news articles on the webpage
-function displayNewsOnPage(news) {
-    const newsContent = news.map(createNewsHtml).join('<hr>'); // Join news articles with a horizontal line
-    const newsContainer = document.getElementById('news-container'); // Get the container element
-    newsContainer.innerHTML = newsContent; // Set the news content in the container
-}
+// Function to handle click events on news items
+document.querySelectorAll('.news-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const topic = item.id.replace('-news', ''); // Extract topic from the news item ID
+        searchTopic(topic);
+    });
+});
 
 // Function to fetch news based on the topic
 async function searchTopic(topic) {
@@ -24,6 +25,13 @@ async function searchTopic(topic) {
     } catch (error) {
         console.error('Error fetching news:', error.message);
     }
+}
+
+// Function to display news articles on the webpage
+function displayNewsOnPage(news) {
+    const newsContent = news.map(createNewsHtml).join('<hr>'); // Join news articles with a horizontal line
+    const newsContainer = document.getElementById('news-container'); // Get the container element
+    newsContainer.innerHTML = newsContent; // Set the news content in the container
 }
 
 // Function to create HTML for a news item

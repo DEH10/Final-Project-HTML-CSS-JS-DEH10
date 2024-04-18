@@ -4,20 +4,14 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e';
 
 // Enable CORS
-fetch.use(cors());
-
-// Set X-Content-Type-Options header
-app.use(helmet({
-  contentSecurityPolicy: false,
-  referrerPolicy: { policy: 'no-referrer' }
-}));
+app.use(cors());
 
 // Define a route to handle the news search
 app.get('/search', async (req, res) => {
     const topic = req.query.topic;
-    const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e';
     const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
 
     try {

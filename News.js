@@ -1,5 +1,5 @@
 const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e';
-const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
+const corsProxyUrl = 'https://cors-proxy.htmldriven.com/?url=';
 
 // Function to handle click events on news items
 document.querySelectorAll('.news-item').forEach(item => {

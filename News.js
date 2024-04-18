@@ -8,7 +8,7 @@ document.querySelectorAll('.news-item').forEach(item => {
 
 // Function to fetch news based on the topic
 async function searchTopic(topic) {
-    const apiUrl = `https://serpapi.com/search.json?engine=google_news&story_token=CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pqdU9UWENSRXNnR1puWWJtdzZ5Z0FQAQ`; // Modified URL
+    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
 
     try {
         const response = await fetch(apiUrl,{

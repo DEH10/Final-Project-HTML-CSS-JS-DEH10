@@ -9,7 +9,6 @@ document.querySelectorAll('.news-item').forEach(item => {
     });
 });
 
-// Function to fetch news based on the topic
 async function searchTopic(topic, apiKey) {
     // Show loading spinner
     document.getElementById('loading-spinner').style.display = 'block';
@@ -17,16 +16,15 @@ async function searchTopic(topic, apiKey) {
     const apiUrl = `${corsProxyUrl}`;
 
     const requestOptions = {
-        method: 'POST',
+        method: 'GET',
         url: apiUrl,
         headers: {
             'content-type': 'application/json',
             'X-RapidAPI-Key': '4e0363d5cbmsh3d792017c35585bp19139djsn93a837129c00',
             'X-RapidAPI-Host': 'http-cors-proxy.p.rapidapi.com'
         },
-        data: {
-            url: `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`,
-            method: 'GET'
+        params: {
+            url: `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`
         }
     };
 

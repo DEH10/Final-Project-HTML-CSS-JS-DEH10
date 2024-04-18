@@ -11,6 +11,9 @@ document.querySelectorAll('.news-item').forEach(item => {
 
 // Function to fetch news based on the topic
 async function searchTopic(topic, apiKey) {
+    // Show loading spinner
+    document.getElementById('loading-spinner').style.display = 'block';
+
     const apiUrl = `${corsProxyUrl}https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
 
     try {
@@ -29,9 +32,14 @@ async function searchTopic(topic, apiKey) {
             console.log('Not enough news articles found.');
         }
     } catch (error) {
-        console.error('Error fetching news:', error.message);
+        // Display error message
+        document.getElementById('error-message').innerText = 'Error fetching news: ' + error.message;
+    } finally {
+        // Hide loading spinner
+        document.getElementById('loading-spinner').style.display = 'none';
     }
 }
+
 
 // Function to display news articles on the webpage
 function displayNewsOnPage(news) {

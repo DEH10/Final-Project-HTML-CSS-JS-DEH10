@@ -1,5 +1,5 @@
 const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e';
-const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
+const corsProxyUrl = 'https://http-cors-proxy.p.rapidapi.com/';
 
 // Function to handle click events on news items
 document.querySelectorAll('.news-item').forEach(item => {
@@ -14,23 +14,28 @@ async function searchTopic(topic, apiKey) {
     // Show loading spinner
     document.getElementById('loading-spinner').style.display = 'block';
 
-    const apiUrl = `${corsProxyUrl}https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`;
+    const apiUrl = `${corsProxyUrl}`;
+
+    const requestOptions = {
+        method: 'POST',
+        url: apiUrl,
+        headers: {
+            'content-type': 'application/json',
+            'X-RapidAPI-Key': '4e0363d5cbmsh3d792017c35585bp19139djsn93a837129c00',
+            'X-RapidAPI-Host': 'http-cors-proxy.p.rapidapi.com'
+        },
+        data: {
+            url: `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`,
+            method: 'GET'
+        }
+    };
 
     try {
-        const response = await fetch(apiUrl, {
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        if (!response.ok) {
+        const response = await axios.request(requestOptions);
+        if (!response.data) {
             throw new Error('Failed to fetch news');
         }
-        const data = await response.json();
-        if (data.news_results && data.news_results.length > 0) {
-            displayNewsOnPage(data.news_results);
-        } else {
-            console.log('Not enough news articles found.');
-        }
+        displayNewsOnPage(response.data);
     } catch (error) {
         // Display error message
         document.getElementById('error-message').innerText = 'Error fetching news: ' + error.message;
@@ -39,7 +44,6 @@ async function searchTopic(topic, apiKey) {
         document.getElementById('loading-spinner').style.display = 'none';
     }
 }
-
 
 // Function to display news articles on the webpage
 function displayNewsOnPage(news) {

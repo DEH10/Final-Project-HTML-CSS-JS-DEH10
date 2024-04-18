@@ -11,7 +11,7 @@ app.use(cors());
 
 // Set X-Content-Type-Options header
 app.use(helmet({
-  contentSecurityPolicy: True,
+  contentSecurityPolicy: false,
   referrerPolicy: { policy: 'no-referrer' }
 }));
 

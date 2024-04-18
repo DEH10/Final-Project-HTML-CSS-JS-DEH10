@@ -11,7 +11,7 @@ async function searchTopic(topic) {
     const apiUrl = `/search?topic=${encodeURIComponent(topic)}`; // Modified URL
 
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(apiUrl,{
             headers: {
                 'Accept': 'application/json'
             }

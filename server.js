@@ -8,6 +8,12 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS
 fetch.use(cors());
 
+// Set X-Content-Type-Options header
+app.use(helmet({
+  contentSecurityPolicy: false,
+  referrerPolicy: { policy: 'no-referrer' }
+}));
+
 // Define a route to handle the news search
 app.get('/search', async (req, res) => {
     const topic = req.query.topic;

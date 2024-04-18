@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Enable CORS
-app.use(cors());
+fetch.use(cors());
 
 // Define a route to handle the news search
 app.get('/search', async (req, res) => {
@@ -20,6 +20,10 @@ app.get('/search', async (req, res) => {
             throw new Error('Failed to fetch news');
         }
         const data = await response.json();
+
+        // Set Cache-Control header to prevent using the Expires header
+        res.setHeader('Cache-Control', 'no-cache'); // Example cache-control header
+
         if (data.news_results && data.news_results.length > 0) {
             res.json(data.news_results);
         } else {

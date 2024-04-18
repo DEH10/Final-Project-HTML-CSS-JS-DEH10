@@ -9,6 +9,12 @@ const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e
 // Enable CORS
 app.use(cors());
 
+// Set X-Content-Type-Options header
+app.use(helmet({
+  contentSecurityPolicy: True,
+  referrerPolicy: { policy: 'no-referrer' }
+}));
+
 // Define a route to handle the news search
 app.get('/search', async (req, res) => {
     const topic = req.query.topic;

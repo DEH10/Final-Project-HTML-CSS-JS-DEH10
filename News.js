@@ -39,15 +39,15 @@ function displayNewsOnPage(news) {
 
 // Function to create HTML for a news item
 function createNewsHtml(news) {
+    // Ensure the news item has an ID or generate a unique one
+    const itemId = news.id || `news-${Date.now()}`;
+
     // Define the topic specific URL for each news item
     const urls = {
         'entrepreneurs-news': 'https://serpapi.com/searches/abd24f5db832edf2/66208f81216a9d4cda434c1a.html',
         'social-change-news': 'https://serpapi.com/searches/773f9f8ed645cad0/662093757690dc4cf2778126.html',
         'innovation-news': 'https://serpapi.com/searches/f0cfef5e24dd7084/66200bfb681ebef8e6a6ddfa.html'
     };
-
-    // Get the ID of the news item
-    const itemId = news.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
     // Create HTML for the news item with an onclick event handler
     return `
@@ -58,7 +58,6 @@ function createNewsHtml(news) {
         </div>
     `;
 }
-
 // Function to open the topic page in a new tab
 function openTopicPage(url) {
     window.open(url, '_blank');

@@ -1,7 +1,7 @@
 // Function to handle click events on news items
 document.querySelectorAll('.news-item').forEach(item => {
     item.addEventListener('click', () => {
-        const topic = item.id.replace(/-nws/g, ''); // Extract topic from the news item ID
+        const topic = item.id.replace('news', ''); // Extract topic from the news item ID
         searchTopic(topic);
     });
 });
@@ -39,12 +39,29 @@ function displayNewsOnPage(news) {
 
 // Function to create HTML for a news item
 function createNewsHtml(news) {
+    // Define the topic specific URL for each news item
+    const urls = {
+        'entrepreneurs-news': 'https://serpapi.com/searches/abd24f5db832edf2/66208f81216a9d4cda434c1a.html',
+        'social-change-news': 'https://serpapi.com/searches/773f9f8ed645cad0/662093757690dc4cf2778126.html',
+        'innovation-news': 'https://serpapi.com/searches/f0cfef5e24dd7084/66200bfb681ebef8e6a6ddfa.html'
+    };
+
+    // Get the ID of the news item
+    const itemId = news.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+    // Create HTML for the news item with an onclick event handler
     return `
-        <div class="news-item">
+        <div class="news-item" id="${itemId}">
+            <img src="https://example.com/${itemId}.png" alt="${news.title}" onclick="openTopicPage('${urls[itemId]}')">
             <a href="${news.link}" target="_blank"><h3>${news.title}</h3></a>
             <p>Date: ${news.published_date}</p>
         </div>
     `;
+}
+
+// Function to open the topic page in a new tab
+function openTopicPage(url) {
+    window.open(url, '_blank');
 }
 
 // Call the searchTopic function with the desired topic

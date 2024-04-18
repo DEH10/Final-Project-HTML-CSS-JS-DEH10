@@ -1,7 +1,7 @@
 // Function to handle click events on news items
 document.querySelectorAll('.news-item').forEach(item => {
     item.addEventListener('click', () => {
-        const topic = item.id.replace('-news', ''); // Extract topic from the news item ID
+        const topic = item.id.replace('-news', 'nws'); // Extract topic from the news item ID
         searchTopic(topic);
     });
 });

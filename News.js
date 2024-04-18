@@ -63,17 +63,3 @@ function createNewsHtml(news) {
 function openTopicPage(url) {
     window.open(url, '_blank');
 }
-
-// Call the searchTopic function with the desired topic
-document.getElementById('search-button').addEventListener('click', async function() {
-    const topic = document.getElementById('search-input').value.trim();
-    if (topic !== '') {
-        try {
-            await searchTopic(topic);
-        } catch (error) {
-            console.error('Error fetching news:', error.message);
-        }
-    } else {
-        console.log('Please enter a valid topic.');
-    }
-});

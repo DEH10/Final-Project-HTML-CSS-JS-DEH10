@@ -33,6 +33,11 @@ async function searchTopic(topic, apiKey) {
         if (!response.data) {
             throw new Error('Failed to fetch news');
         }
+         const data = await response.json();
+        console.log(data); // Log Response Data
+        if (!data || !data.articles) {
+            throw new Error('Response data or articles not found');
+        }
         console.log(response.data); //Log response data
         displayNewsOnPage(response.data.articles);
     } catch (error) {

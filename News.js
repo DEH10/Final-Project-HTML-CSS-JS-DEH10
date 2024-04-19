@@ -1,5 +1,5 @@
 const apiKey = '438b027b63ab4742b887ee49d659be18';
-const corsProxyUrl = 'https://http-cors-proxy.p.rapidapi.com/';
+const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 // Function to handle click events on news items
 document.querySelectorAll('.news-item').forEach(item => {
@@ -19,12 +19,10 @@ async function searchTopic(topic, apiKey) {
         method: 'GET',
         url: apiUrl,
         headers: {
-            'content-type': 'application/json',
-            'X-RapidAPI-Key': '4e0363d5cbmsh3d792017c35585bp19139djsn93a837129c00',
-            'X-RapidAPI-Host': 'http-cors-proxy.p.rapidapi.com'
+            'content-type': 'application/json'
         },
         params: {
-            url: `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${apiKey}`
+            url: `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${apiKey}`
         }
     };
 
@@ -33,7 +31,7 @@ async function searchTopic(topic, apiKey) {
         if (!response.data) {
             throw new Error('Failed to fetch news');
         }
-        displayNewsOnPage(response.data);
+        displayNewsOnPage(response.data.articles);
     } catch (error) {
         // Display error message
         document.getElementById('error-message').innerText = 'Error fetching news: ' + error.message;
@@ -52,22 +50,12 @@ function displayNewsOnPage(news) {
 
 // Function to create HTML for a news item
 function createNewsHtml(news) {
-    // Define the topic specific URL for each news item
-    const urls = {
-        'entrepreneurs-news': 'https://serpapi.com/searches/abd24f5db832edf2/66208f81216a9d4cda434c1a.html',
-        'social-change-news': 'https://serpapi.com/searches/773f9f8ed645cad0/662093757690dc4cf2778126.html',
-        'innovation-news': 'https://serpapi.com/searches/f0cfef5e24dd7084/66200bfb681ebef8e6a6ddfa.html'
-    };
-
-    // Get the ID of the news item
-    const itemId = news.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-
     // Create HTML for the news item with an onclick event handler
     return `
-        <div class="news-item" id="${itemId}">
-            <img src="https://example.com/${itemId}.png" alt="${news.title}" onclick="openTopicPage('${urls[itemId]}')">
-            <a href="${news.link}" target="_blank"><h3>${news.title}</h3></a>
-            <p>Date: ${news.published_date}</p>
+        <div class="news-item">
+            <img src="${news.urlToImage}" alt="${news.title}" onclick="openTopicPage('${news.url}')">
+            <a href="${news.url}" target="_blank"><h3>${news.title}</h3></a>
+            <p>Date: ${news.publishedAt}</p>
         </div>
     `;
 }

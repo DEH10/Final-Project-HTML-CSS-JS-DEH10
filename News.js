@@ -13,7 +13,7 @@ async function searchTopic(topic, apiKey) {
     // Show loading spinner
     document.getElementById('loading-spinner').style.display = 'block';
 
-    const apiUrl = `https://cors-anywhere.herokuapp.com/https://gnews.io/api/v4/search?q=${encodeURIComponent(topic)}&apiKey=${apiKey}`;
+   const apiUrl = `${corsProxyUrl}https://gnews.io/api/v4/search?q=${encodeURIComponent(topic)}&apiKey=${apiKey}`;
 
     const requestOptions = {
         method: 'GET',

@@ -1,4 +1,4 @@
-const apiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e';
+const apiKey = '438b027b63ab4742b887ee49d659be18';
 const corsProxyUrl = 'https://http-cors-proxy.p.rapidapi.com/';
 
 // Function to handle click events on news items

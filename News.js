@@ -61,3 +61,17 @@ function createNewsHtml(news) {
 function openTopicPage(url) {
     window.open(url, '_blank');
 }
+
+// Dynamically load tawk.to script
+function loadTawkToScript() {
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = 'https://embed.tawk.to/662295a91ec1082f04e4b2df/1hrrhh7q6';
+    s.charset = 'UTF-8';
+    s.setAttribute('crossorigin', '*');
+    document.body.appendChild(s);
+}
+
+// Call the function to load tawk.to script
+loadTawkToScript();

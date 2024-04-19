@@ -1,4 +1,4 @@
-const apiKey = '438b027b63ab4742b887ee49d659be18';
+const apiKey = '5c836577668c041bc597e3ee36ba5a11';
 const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 // Function to handle click events on news items
@@ -19,10 +19,11 @@ async function searchTopic(topic, apiKey) {
         method: 'GET',
         url: apiUrl,
         headers: {
-            'content-type': 'application/json'
+            'Accept': 'application/json'
+            
         },
         params: {
-            url: `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${apiKey}`
+            url: `https://gnews.io/api/v4/search?q=${encodeURIComponent(topic)}&apiKey=${apiKey}`
         }
     };
 

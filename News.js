@@ -29,9 +29,11 @@ async function searchTopic(topic, apiKey) {
 
     try {
         const response = await axios.request(requestOptions);
+        console.log(response.data); //Log Response Data
         if (!response.data) {
             throw new Error('Failed to fetch news');
         }
+        console.log(response.data); //Log response data
         displayNewsOnPage(response.data.articles);
     } catch (error) {
         // Display error message

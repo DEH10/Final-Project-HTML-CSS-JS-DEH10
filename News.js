@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
         item.addEventListener('click', () => {
             const topic = item.id.replace('-news', ''); // Extract topic from the news item ID
             searchTopic(topic, newsApiKey); // Pass the apiKey and topic here
-        }, { passive: true }); // Add { passive: true } here
     });
 
     // Show loading spinner

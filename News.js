@@ -13,8 +13,8 @@ document.querySelectorAll('.news-item').forEach(item => {
 async function searchTopic(topic, apiKey) {
     // Show loading spinner
     document.getElementById('loading-spinner').style.display = 'block';
-
-    const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
+    const apiUrl = 'https://newsdata.io/api/1/news?apiKey=pub_42358702e8cccca6301597e64e67b7797eeb4'
+    // const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
         headers: {

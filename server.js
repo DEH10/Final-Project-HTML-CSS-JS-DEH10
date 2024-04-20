@@ -11,7 +11,7 @@ app.use(cors());
 // Define a route to handle proxy requests to SerpApi
 app.get('/proxy', async (req, res) => {
     const { q, tbm, api_key } = req.query;
-    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(q)}&tbm=${encodeURIComponent(tbm)}&api_key=${encodeURIComponent(api_key)}`;
+   const apiUrl = `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${apiKey}`;
 
     try {
         const response = await fetch(apiUrl);

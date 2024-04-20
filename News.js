@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingSpinner.style.display = 'block';
     }
 
-    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
+    //const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
+    const apiUrl = `https://api.serpapi.com/v1/search?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
         headers: {

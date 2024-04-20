@@ -18,44 +18,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function searchTopic(topic, apiKey) {
-        // Show loading spinner
-        if (loadingSpinner) {
-            loadingSpinner.style.display = 'block';
+    // Show loading spinner
+    if (loadingSpinner) {
+        loadingSpinner.style.display = 'block';
+    }
+
+    const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Cache-Control': 'no-cache',
+            'Authorization': newsApiKey // Either of these headers can be used for authentication
         }
+    };
 
-        const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Cache-Control': 'no-cache',
-                'Authorization': newsApiKey // Either of these headers can be used for authentication
-            }
-        };
+    try {
+        const response = await fetch(apiUrl, requestOptions);
+        const responseData = await response.json();
+        console.log(responseData); // Log Response Data
+        
+        // Log image URLs for each news article
+        responseData.articles.forEach(newsItem => {
+            console.log('Image URL:', newsItem.urlToImage);
+            // Optionally, you can open each URL in a new tab for manual inspection
+            // window.open(newsItem.urlToImage, '_blank');
+        });
 
-        try {
-            const response = await fetch(apiUrl, requestOptions);
-            const responseData = await response.json();
-            console.log(responseData); // Log Response Data
-            if (!responseData || !responseData.articles) {
-                throw new Error('Response data or articles not found');
-            }
-            displayNewsOnPage(responseData.articles);
-        } catch (error) {
-            // Display error message
-            const errorMessage = document.getElementById('error-message');
-            if (errorMessage) {
-                errorMessage.innerText = 'Error fetching news: ' + error.message;
-            } else {
-                console.error('error-message element not found');
-            }
-        } finally {
-            // Hide loading spinner
-            if (loadingSpinner) {
-                loadingSpinner.style.display = 'none';
-            }
+        if (!responseData || !responseData.articles) {
+            throw new Error('Response data or articles not found');
+        }
+        displayNewsOnPage(responseData.articles);
+    } catch (error) {
+        // Display error message
+        const errorMessage = document.getElementById('error-message');
+        if (errorMessage) {
+            errorMessage.innerText = 'Error fetching news: ' + error.message;
+        } else {
+            console.error('error-message element not found');
+        }
+    } finally {
+        // Hide loading spinner
+        if (loadingSpinner) {
+            loadingSpinner.style.display = 'none';
         }
     }
+}
+
 
     // Function to display news articles on the webpage
     function displayNewsOnPage(news) {

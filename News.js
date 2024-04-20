@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const newsApiKey = 'pub_42358702e8cccca6301597e64e67b7797eeb4'; // Your NewsAPI key
+    const newsApiKey = '438b027b63ab4742b887ee49d659be18'; // Your NewsAPI key
 
     // Function to handle click events on news items
     document.querySelectorAll('.news-item').forEach(item => {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingSpinner.style.display = 'block';
     }
 
-    const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
+    const apiUrl = `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
         headers: {

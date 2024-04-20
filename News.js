@@ -23,13 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingSpinner.style.display = 'block';
         }
 
-        // Check if the error-message element exists
-        const errorMessageElement = document.getElementById('error-message');
-        if (!errorMessageElement) {
-            console.error('error-message element not found');
-            return; // Exit the function if the element doesn't exist
-        }
-
         const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
         const requestOptions = {
             method: 'GET',
@@ -50,7 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
             displayNewsOnPage(responseData.articles);
         } catch (error) {
             // Display error message
-            errorMessageElement.innerText = 'Error fetching news: ' + error.message;
+            const errorMessage = document.getElementById('error-message');
+            if (errorMessage) {
+                errorMessage.innerText = 'Error fetching news: ' + error.message;
+            } else {
+                console.error('error-message element not found');
+            }
         } finally {
             // Hide loading spinner
             if (loadingSpinner) {

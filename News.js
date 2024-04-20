@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
+        mode: 'no-cors', // Set the mode to 'no-cors'
         headers: {
             'Accept': 'application/json',
             'Cache-Control': 'no-cache',

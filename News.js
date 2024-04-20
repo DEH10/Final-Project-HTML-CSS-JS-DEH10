@@ -18,8 +18,10 @@ async function searchTopic(topic, apiKey) {
     const requestOptions = {
         method: 'GET',
         headers: {
-            'X-Api-Key': newsApiKey,
+            'Accept': 'application/json',
+            'Cache-Control': 'no-cache',
             'Authorization': newsApiKey // Either of these headers can be used for authentication
+            
         }
     };
 

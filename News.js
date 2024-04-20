@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
-		mode: 'no-cors'
+	mode: 'no-cors'
         headers: {
             'Accept': 'application/json',
             'Cache-Control': 'no-cache',

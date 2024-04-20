@@ -77,3 +77,5 @@ function loadTawkToScript() {
 
 // Call the function to load tawk.to script
 loadTawkToScript();
+    
+}); // Closing curly brace added to close the DOMContentLoaded event listener

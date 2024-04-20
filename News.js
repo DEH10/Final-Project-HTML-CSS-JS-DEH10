@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const newsApiKey = '7b921481edf0984cd4518d191e97bd356419a5977fe37dc9fef483664ff8554e'; // Your NewsAPI key
+    const newsApiKey = '2cee9c3194475cca922f88d0ca2244fbbb906cfc9046509f9be9d1d8ed806a5d'; // Your NewsAPI key
 
     // Function to handle click events on news items
     document.querySelectorAll('.news-item').forEach(item => {
@@ -23,8 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingSpinner.style.display = 'block';
     }
 
-    //const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
-    const apiUrl = `https://api.serpapi.com/v1/search?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
+    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
         headers: {

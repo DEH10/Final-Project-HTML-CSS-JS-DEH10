@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const newsApiKey = '2cee9c3194475cca922f88d0ca2244fbbb906cfc9046509f9be9d1d8ed806a5d'; // Your NewsAPI key
+    const newsApiKey = 'pub_42358702e8cccca6301597e64e67b7797eeb4'; // Your NewsAPI key
 
     // Function to handle click events on news items
     document.querySelectorAll('.news-item').forEach(item => {
         item.addEventListener('click', () => {
             const topic = item.id.replace('-news', ''); // Extract topic from the news item ID
             searchTopic(topic, newsApiKey); // Pass the apiKey and topic here
+        }, { passive: true }); // Add { passive: true } here
     });
 
     // Show loading spinner
@@ -16,20 +17,20 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('loading-spinner element not found');
     }
 
-    async function searchTopic(topic, newsApiKey) {
+    async function searchTopic(topic, apiKey) {
     // Show loading spinner
     if (loadingSpinner) {
         loadingSpinner.style.display = 'block';
     }
 
-    const apiUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(topic)}&tbm=nws&api_key=${newsApiKey}`;
+    const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
-        mode: 'no-cors', // Set the mode to 'no-cors'
+		mode: 'no-cors'
         headers: {
             'Accept': 'application/json',
             'Cache-Control': 'no-cache',
-             'Authorization': `Bearer ${newsApiKey}` // Assuming it's a Bearer token
+            'Authorization': newsApiKey // Either of these headers can be used for authentication
         }
     };
 
@@ -78,7 +79,7 @@ function displayNewsOnPage(news) {
     newsContainer.innerHTML = '';
 
     // Iterate over each news article and create HTML elements to display them
-    news.forEach(newsItem => {
+    responseData.results.forEach(newsItem => {
         // Create a container for each news article
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('news-item');

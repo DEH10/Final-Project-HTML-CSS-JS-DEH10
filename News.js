@@ -14,12 +14,12 @@ async function searchTopic(topic, apiKey) {
     // Show loading spinner
     document.getElementById('loading-spinner').style.display = 'block';
 
-    const apiUrl = `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${apiKey}`;
+    const apiUrl = `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
         headers: {
-            'X-Api-Key': apiKey,
-            'Authorization': apiKey // Either of these headers can be used for authentication
+            'X-Api-Key': newsApiKey,
+            'Authorization': newsApiKey // Either of these headers can be used for authentication
         }
     };
 

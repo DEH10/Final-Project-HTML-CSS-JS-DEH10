@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open(url, '_blank');
     }
 
-    // Dynamically load tawk.to script
+   // Dynamically load tawk.to script
     function loadTawkToScript() {
         var s = document.createElement("script");
         s.type = "text/javascript";

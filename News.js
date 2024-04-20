@@ -67,40 +67,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Function to display news articles on the webpage
-    function displayNewsOnPage(news) {
-        const newsContainer = document.getElementById('news-container');
-        if (!newsContainer) {
-            console.error('news-container element not found');
-            return;
-        }
-
-        // Clear the existing content of the news container
-        newsContainer.innerHTML = '';
-
-        // Iterate over each news article and create HTML elements to display them
-        news.forEach(newsItem => {
-            const newsDiv = document.createElement('div');
-            newsDiv.classList.add('news-item');
-
-            const image = document.createElement('img');
-            image.src = newsItem.urlToImage;
-            image.alt = newsItem.title;
-
-            const title = document.createElement('h3');
-            title.textContent = newsItem.title;
-
-            const date = document.createElement('p');
-            date.textContent = `Date: ${newsItem.publishedAt}`;
-
-            // Append image, title, and date to the news item div
-            newsDiv.appendChild(image);
-            newsDiv.appendChild(title);
-            newsDiv.appendChild(date);
-
-            // Append the news item div to the news container
-            newsContainer.appendChild(newsDiv);
-        });
+function displayNewsOnPage(news) {
+    const newsContainer = document.getElementById('news-container');
+    if (!newsContainer) {
+        console.error('news-container element not found');
+        return;
     }
+
+    // Clear the existing content of the news container
+    newsContainer.innerHTML = '';
+
+    // Iterate over each news article and create HTML elements to display them
+    news.forEach(newsItem => {
+        // Create a container for each news article
+        const newsDiv = document.createElement('div');
+        newsDiv.classList.add('news-item');
+
+        // Create image element
+        const image = document.createElement('img');
+        image.src = newsItem.urlToImage;
+        image.alt = newsItem.title;
+
+        // Create title element
+        const title = document.createElement('h3');
+        title.textContent = newsItem.title;
+
+        // Create date element
+        const date = document.createElement('p');
+        date.textContent = `Date: ${newsItem.publishedAt}`;
+
+        // Create link element
+        const link = document.createElement('a');
+        link.href = newsItem.url;
+        link.target = '_blank';
+        link.textContent = 'Read more';
+
+        // Append image, title, date, and link to the news item div
+        newsDiv.appendChild(image);
+        newsDiv.appendChild(title);
+        newsDiv.appendChild(date);
+        newsDiv.appendChild(link);
+
+        // Append the news item div to the news container
+        newsContainer.appendChild(newsDiv);
+    });
+}
 
     // Function to create HTML for a news item
     function createNewsHtml(news) {

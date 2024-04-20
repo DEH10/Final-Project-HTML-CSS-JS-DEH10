@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         headers: {
             'Accept': 'application/json',
             'Cache-Control': 'no-cache',
-            'Authorization': 'newsApiKey' // Either of these headers can be used for authentication
+            'Authorization': newsApiKey // Either of these headers can be used for authentication
         }
     };
 

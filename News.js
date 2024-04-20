@@ -1,4 +1,3 @@
-// Function to handle click events on news items
 document.addEventListener('DOMContentLoaded', function() {
     const newsApiKey = 'pub_42358702e8cccca6301597e64e67b7797eeb4'; // Your NewsAPI key
 
@@ -24,6 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingSpinner.style.display = 'block';
         }
 
+        // Check if the error-message element exists
+        const errorMessageElement = document.getElementById('error-message');
+        if (!errorMessageElement) {
+            console.error('error-message element not found');
+            return; // Exit the function if the element doesn't exist
+        }
+
         const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
         const requestOptions = {
             method: 'GET',
@@ -44,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayNewsOnPage(responseData.articles);
         } catch (error) {
             // Display error message
-            document.getElementById('error-message').innerText = 'Error fetching news: ' + error.message;
+            errorMessageElement.innerText = 'Error fetching news: ' + error.message;
         } finally {
             // Hide loading spinner
             if (loadingSpinner) {

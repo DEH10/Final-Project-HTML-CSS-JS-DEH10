@@ -1,5 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const newsApiKey = 'pub_42358702e8cccca6301597e64e67b7797eeb4'; // Your NewsAPI key
+document.addEventListener('DOMContentLoaded', async function() {
+    const username = "username";
+    const password = "password";
+    const appID = "ba04fd57";
+    const newsApiKey = "4b6cab42f25b12b28a0b076c2008b080"; // Add your NewsAPI key here
 
     // Function to handle click events on news items
     document.querySelectorAll('.news-item').forEach(item => {
@@ -17,44 +20,70 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('loading-spinner element not found');
     }
 
-    async function searchTopic(topic, apiKey) {
-    // Show loading spinner
-    if (loadingSpinner) {
-        loadingSpinner.style.display = 'block';
+    // Function to fetch token from Aylien API
+    async function getToken() {
+        try {
+            const response = await fetch("https://api.aylien.com/v1/oauth/token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization": 'Basic ' + btoa(`${username}:${password}`),
+                }
+            });
+            const data = await response.json();
+            if (!data.access_token) {
+                throw new Error("Access token not found in response");
+            }
+            return data.access_token;
+        } catch (error) {
+            console.error('Error fetching token:', error);
+            throw error;
+        }
     }
 
-    const apiUrl = `https://newsdata.io/api/1/news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
-    const requestOptions = {
-        method: 'GET',
-	mode: 'no-cors'
-        headers: {
-            'Accept': 'application/json',
-            'Cache-Control': 'no-cache',
-            'Authorization': newsApiKey // Either of these headers can be used for authentication
+    // Fetch token
+    let token;
+    try {
+        token = await getToken();
+    } catch (error) {
+        console.error('Error getting token:', error);
+        // Hide loading spinner
+        if (loadingSpinner) {
+            loadingSpinner.style.display = 'none';
         }
+        return; // Stop further execution if token retrieval fails
+    }
+
+    // Fetch news articles using token
+    const headers = {
+        "Authorization": `Bearer ${token}`,
+        "App-ID": appID,
+    };
+
+    const url = 'https://api.aylien.com/v6/news/stories?aql=industries:({{id:in.infomed}}) AND language:(en) AND categories:({{taxonomy:aylien AND id:ay.lifesoc}} OR {{taxonomy:aylien AND id:ay.biz}} OR {{taxonomy:aylien AND id:ay.gen}}) AND entities:({{id:Q5380740 AND overall_prominence:>=0.65}} OR {{id:Q24915087 AND overall_prominence:>=0.65}} OR {{id:Q794803 AND overall_prominence:>=0.65}}) AND sentiment.title.polarity:(negative neutral positive)&cursor=*&published_at.end=NOW&published_at.start=NOW-7DAYS/DAY';
+
+    const requestOptions = {
+        method: "GET",
+        headers,
+        redirect: "follow"
     };
 
     try {
-        const response = await fetch(apiUrl, requestOptions);
+        const response = await fetch(url, requestOptions);
         const responseData = await response.json();
         console.log(responseData); // Log Response Data
-        
-        // Log image URLs for each news article
-        responseData.results.forEach(newsItem => {
-            console.log('Image URL:', newsItem.urlToImage);
-            // Optionally, you can open each URL in a new tab for manual inspection
-            // window.open(newsItem.urlToImage, '_blank');
-        });
 
-        if (!responseData || !responseData.articles) {
-            throw new Error('Response data or articles not found');
+        if (!responseData || !responseData.stories) {
+            throw new Error('Response data or stories not found');
         }
-        displayNewsOnPage(responseData.articles);
+
+        // Display news articles on the webpage
+        displayNewsOnPage(responseData.stories);
     } catch (error) {
-        // Display error message
-        const errorMessage = document.getElementById('error-message');
-        if (errorMessage) {
-            errorMessage.innerText = 'Error fetching news: ' + error.message;
+        // Display error message on the website
+        const errorMessageElement = document.getElementById('error-message');
+        if (errorMessageElement) {
+            errorMessageElement.innerText = 'Error fetching news: ' + error.message;
         } else {
             console.error('error-message element not found');
         }
@@ -64,10 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingSpinner.style.display = 'none';
         }
     }
-}
+});
 
-
-    // Function to display news articles on the webpage
+// Function to display news articles on the webpage
 function displayNewsOnPage(news) {
     const newsContainer = document.getElementById('news-container');
     if (!newsContainer) {
@@ -79,70 +107,35 @@ function displayNewsOnPage(news) {
     newsContainer.innerHTML = '';
 
     // Iterate over each news article and create HTML elements to display them
-    responseData.results.forEach(newsItem => {
-        // Create a container for each news article
+    news.forEach(newsItem => {
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('news-item');
 
-        // Create image element
-        const image = document.createElement('img');
-        image.src = newsItem.urlToImage;
-        image.alt = newsItem.title;
-
-        // Create title element
         const title = document.createElement('h3');
         title.textContent = newsItem.title;
 
-        // Create date element
-        const date = document.createElement('p');
-        date.textContent = `Date: ${newsItem.publishedAt}`;
+        const description = document.createElement('p');
+        description.textContent = newsItem.body;
 
-        // Create link element
-        const link = document.createElement('a');
-        link.href = newsItem.url;
-        link.target = '_blank';
-        link.textContent = 'Read more';
-
-        // Append image, title, date, and link to the news item div
-        newsDiv.appendChild(image);
+        // Append title and description to the news item div
         newsDiv.appendChild(title);
-        newsDiv.appendChild(date);
-        newsDiv.appendChild(link);
+        newsDiv.appendChild(description);
 
         // Append the news item div to the news container
         newsContainer.appendChild(newsDiv);
     });
 }
 
-    // Function to create HTML for a news item
-    function createNewsHtml(news) {
-        // Create HTML for the news item with an onclick event handler
-        return `
-            <div class="news-item">
-                <img src="${news.urlToImage}" alt="${news.title}" onclick="openTopicPage('${news.url}')">
-                <a href="${news.url}" target="_blank"><h3>${news.title}</h3></a>
-                <p>Date: ${news.publishedAt}</p>
-            </div>
-        `;
-    }
+// Dynamically load tawk.to script
+function loadTawkToScript() {
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = 'https://embed.tawk.to/662295a91ec1082f04e4b2df/1hrrhh7q6';
+    s.charset = 'UTF-8';
+    s.setAttribute('crossorigin', '*');
+    document.body.appendChild(s);
+}
 
-    // Function to open the topic page in a new tab
-    function openTopicPage(url) {
-        window.open(url, '_blank');
-    }
-
-    // Dynamically load tawk.to script
-    function loadTawkToScript() {
-        var s = document.createElement("script");
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = 'https://embed.tawk.to/662295a91ec1082f04e4b2df/1hrrhh7q6';
-        s.charset = 'UTF-8';
-        s.setAttribute('crossorigin', '*');
-        document.body.appendChild(s);
-    }
-
-    // Call the function to load tawk.to script
-    loadTawkToScript();
-
-});
+// Call the function to load tawk.to script
+loadTawkToScript();

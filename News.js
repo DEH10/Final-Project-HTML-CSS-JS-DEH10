@@ -30,8 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         headers: {
             'Accept': 'application/json',
             'Cache-Control': 'no-cache',
-            'Authorization': newsApiKey // Either of these headers can be used for authentication
-            'Content-Type': 'image/svg+xml; charset=utf-8'
+             'Authorization': `Bearer ${newsApiKey}` // Assuming it's a Bearer token
         }
     };
 

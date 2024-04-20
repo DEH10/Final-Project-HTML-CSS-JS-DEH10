@@ -58,16 +58,40 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to display news articles on the webpage
-    function displayNewsOnPage(news) {
-        const newsContent = news.map(createNewsHtml).join('<hr>'); // Join news articles with a horizontal line
-        const newsContainer = document.getElementById('news-container'); // Get the container element
-        if (newsContainer) {
-            newsContainer.innerHTML = newsContent; // Set the news content in the container
-        } else {
-            console.error('news-container element not found');
-        }
+function displayNewsOnPage(news) {
+    const newsContainer = document.getElementById('news-container');
+    if (!newsContainer) {
+        console.error('news-container element not found');
+        return;
     }
 
+    // Clear the existing content of the news container
+    newsContainer.innerHTML = '';
+
+    // Iterate over each news article and create HTML elements to display them
+    news.forEach(newsItem => {
+        const newsDiv = document.createElement('div');
+        newsDiv.classList.add('news-item');
+
+        const image = document.createElement('img');
+        image.src = newsItem.urlToImage;
+        image.alt = newsItem.title;
+
+        const title = document.createElement('h3');
+        title.textContent = newsItem.title;
+
+        const date = document.createElement('p');
+        date.textContent = `Date: ${newsItem.publishedAt}`;
+
+        // Append image, title, and date to the news item div
+        newsDiv.appendChild(image);
+        newsDiv.appendChild(title);
+        newsDiv.appendChild(date);
+
+        // Append the news item div to the news container
+        newsContainer.appendChild(newsDiv);
+    });
+}
     // Function to create HTML for a news item
     function createNewsHtml(news) {
         // Create HTML for the news item with an onclick event handler

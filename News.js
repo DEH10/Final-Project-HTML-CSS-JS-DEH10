@@ -1,7 +1,16 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const username = "dehumphrey@live.carlow.edu";
-    const password = "NomoreExcuses@1";
+    const username = "username";
+    const password = "password";
     const appID = "ba04fd57";
+    const newsApiKey = "4b6cab42f25b12b28a0b076c2008b080"; // Add your NewsAPI key here
+
+    // Function to handle click events on news items
+    document.querySelectorAll('.news-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const topic = item.id.replace('-news', ''); // Extract topic from the news item ID
+            searchTopic(topic, newsApiKey); // Pass the apiKey and topic here
+        }, { passive: true }); // Add { passive: true } here
+    });
 
     // Show loading spinner
     const loadingSpinner = document.getElementById('loading-spinner');

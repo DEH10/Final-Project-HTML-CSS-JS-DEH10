@@ -1,4 +1,6 @@
-const newsApiKey = '438b027b63ab4742b887ee49d659be18'; // Your NewsAPI key
+// Function to handle click events on news items
+document.addEventListener('DOMContentLoaded', function() {
+    const newsApiKey = '438b027b63ab4742b887ee49d659be18'; // Your NewsAPI key
 
 // Function to handle click events on news items
 document.querySelectorAll('.news-item').forEach(item => {

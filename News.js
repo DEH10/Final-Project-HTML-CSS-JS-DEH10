@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('loading-spinner element not found');
     }
 
-    async function searchTopic(topic, apiKey) {
+    async function searchTopic(topic, newsApiKey) {
     // Show loading spinner
     if (loadingSpinner) {
         loadingSpinner.style.display = 'block';

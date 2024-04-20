@@ -326,40 +326,6 @@ section {
     margin-top: 30px; /* Setting margin top */
 }
 
-/* news-container*/
-.news-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.news-item {
-    width: 30%; /* Adjust width as needed */
-    margin-bottom: 20px; /* Adjust margin as needed */
-}
-
-.news-item img {
-    max-width: 100%;
-    height: auto;
-}
-
-.news-item h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.news-item p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.news-item a {
-    display: block;
-    color: blue;
-    text-decoration: none;
-}
-
 /* Related Articles Section styles */
 #news-info {
     padding: 20px;
@@ -400,6 +366,19 @@ section {
     height: auto; /* Maintain aspect ratio */
     display: block; /* Remove extra space below image */
     border-radius: 5px; /* Add border radius for rounded corners */
+}
+
+/* news-container*/
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.news-item a {
+    display: block;
+    color: blue;
+    text-decoration: none;
 }
 
 /* Styling footer section */

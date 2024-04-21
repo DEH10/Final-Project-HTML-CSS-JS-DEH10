@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         "App-ID": appID,
     };
 
-    const url = 'https://api.aylien.com/v6/news/stories?aql=industries:({{id:in.infomed}}) AND language:(en) AND categories:({{taxonomy:aylien AND id:ay.lifesoc}} OR {{taxonomy:aylien AND id:ay.biz}} OR {{taxonomy:aylien AND id:ay.gen}}) AND entities:({{id:Q5380740 AND overall_prominence:>=0.65}} OR {{id:Q24915087 AND overall_prominence:>=0.65}} OR {{id:Q794803 AND overall_prominence:>=0.65}}) AND sentiment.title.polarity:(negative neutral positive)&cursor=*&published_at.end=NOW&published_at.start=NOW-7DAYS/DAY';
+    const url = 'https://api.aylien.com/v6/news/stories?aql=topic:({{id:in.infomed}}) AND language:(en) AND categories:({{taxonomy:aylien AND id:ay.lifesoc}} OR {{taxonomy:aylien AND id:ay.biz}} OR {{taxonomy:aylien AND id:ay.gen}}) AND entities:({{id:Q5380740 AND overall_prominence:>=0.65}} OR {{id:Q24915087 AND overall_prominence:>=0.65}} OR {{id:Q794803 AND overall_prominence:>=0.65}}) AND sentiment.title.polarity:(negative neutral positive)&cursor=*&published_at.end=NOW&published_at.start=NOW-7DAYS/DAY';
 
     const requestOptions = {
         method: "GET",

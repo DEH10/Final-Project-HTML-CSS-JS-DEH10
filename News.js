@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(responseData); // Log Response Data
         
         // Log image URLs for each news article
-        responseData.results.forEach(newsItem => {
+        responseData.articles.forEach(newsItem => {
             console.log('Image URL:', newsItem.urlToImage);
             // Optionally, you can open each URL in a new tab for manual inspection
             // window.open(newsItem.urlToImage, '_blank');

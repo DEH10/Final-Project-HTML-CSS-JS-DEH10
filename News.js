@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const newsApiKey = '438b027b63ab4742b887ee49d659be18'; // Your NewsAPI key
+    const newsApiKey = 'a92ea4464a8d4a98916fab91f6bad992'; // Your NewsAPI key
 
 
     // Function to handle click events on news items
@@ -24,14 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingSpinner.style.display = 'block';
     }
 
-    const apiUrl = `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
+    const apiUrl = `https://api.worldnewsapi.com/search-news?q=${encodeURIComponent(topic)}&apiKey=${newsApiKey}`;
     const requestOptions = {
         method: 'GET',
         headers: {
-	     
-            'Accept': 'application/json',
-            'Cache-Control': 'no-cache',
-            'Authorization': 'Bearer $newsApiKey' // Either of these headers can be used for authentication
+            'x-api-key': newsApiKey
         }
     };
 

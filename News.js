@@ -1,24 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const newsApiKey = 'a92ea4464a8d4a98916fab91f6bad992'; // Your NewsAPI key
-
-
-    // Function to handle click events on news items
-    document.querySelectorAll('.news-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const topic = item.id.replace('-news', ''); // Extract topic from the news item ID
-            searchTopic(topic, newsApiKey); // Pass the apiKey and topic here
-        }, { passive: true }); // Add { passive: true } here
-    });
-
-    // Show loading spinner
-    const loadingSpinner = document.getElementById('loading-spinner');
-    if (loadingSpinner) {
-        loadingSpinner.style.display = 'block';
-    } else {
-        console.error('loading-spinner element not found');
-    }
-
-    async function searchTopic(topic, apiKey) {
+// Define searchTopic function
+async function searchTopic(topic, newsApiKey) {
     // Show loading spinner
     if (loadingSpinner) {
         loadingSpinner.style.display = 'block';
@@ -36,13 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const response = await fetch(apiUrl, requestOptions);
         const responseData = await response.json();
         console.log(responseData); // Log Response Data
-        
-        // Log image URLs for each news article
-        responseData.articles.forEach(newsItem => {
-            console.log('Image URL:', newsItem.urlToImage);
-            // Optionally, you can open each URL in a new tab for manual inspection
-            // window.open(newsItem.urlToImage, '_blank');
-        });
 
         if (!responseData || !responseData.articles) {
             throw new Error('Response data or articles not found');
@@ -64,8 +38,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
 
+// Show loading spinner
+const loadingSpinner = document.getElementById('loading-spinner');
+if (loadingSpinner) {
+    loadingSpinner.style.display = 'block';
+} else {
+    console.error('loading-spinner element not found');
+}
 
-    // Function to display news articles on the webpage
+document.addEventListener('DOMContentLoaded', async function() {
+    const newsApiKey = 'a92ea4464a8d4a98916fab91f6bad992'; // Your NewsAPI key
+
+    // Function to handle click events on news items
+    document.querySelectorAll('.news-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const topic = item.id.replace('-news', ''); // Extract topic from the news item ID
+            searchTopic(topic, newsApiKey); // Pass the apiKey and topic here
+        }, { passive: true }); // Add { passive: true } here
+    });
+
+    // Dynamically load tawk.to script
+    function loadTawkToScript() {
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = 'https://embed.tawk.to/662295a91ec1082f04e4b2df/1hrrhh7q6';
+        s.charset = 'UTF-8';
+        s.setAttribute('crossorigin', '*');
+        document.body.appendChild(s);
+    }
+
+    // Call the function to load tawk.to script
+    loadTawkToScript();
+});
+
+// Function to display news articles on the webpage
 function displayNewsOnPage(news) {
     const newsContainer = document.getElementById('news-container');
     if (!newsContainer) {
@@ -111,36 +118,3 @@ function displayNewsOnPage(news) {
         newsContainer.appendChild(newsDiv);
     });
 }
-
-    // Function to create HTML for a news item
-    function createNewsHtml(news) {
-        // Create HTML for the news item with an onclick event handler
-        return `
-            <div class="news-item">
-                <img src="${news.urlToImage}" alt="${news.title}" onclick="openTopicPage('${news.url}')">
-                <a href="${news.url}" target="_blank"><h3>${news.title}</h3></a>
-                <p>Date: ${news.publishedAt}</p>
-            </div>
-        `;
-    }
-
-    // Function to open the topic page in a new tab
-    function openTopicPage(url) {
-        window.open(url, '_blank');
-    }
-
-    // Dynamically load tawk.to script
-    function loadTawkToScript() {
-        var s = document.createElement("script");
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = 'https://embed.tawk.to/662295a91ec1082f04e4b2df/1hrrhh7q6';
-        s.charset = 'UTF-8';
-        s.setAttribute('crossorigin', '*');
-        document.body.appendChild(s);
-    }
-
-    // Call the function to load tawk.to script
-    loadTawkToScript();
-
-});

@@ -118,4 +118,6 @@ function displayNewsOnPage(news) {
         // Append the news item div to the news container
         newsContainer.appendChild(newsDiv);
     });
+   // Redirect to the news.html page after displaying the articles
+    window.location.href = 'news.html';
 }
